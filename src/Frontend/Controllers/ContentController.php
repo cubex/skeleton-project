@@ -1,5 +1,5 @@
 <?php
-namespace Project\Controllers;
+namespace Project\Frontend\Controllers;
 
 use Packaged\QueryBuilder\SelectExpression\CustomSelectExpression;
 use Project\Storage\ContentPage;

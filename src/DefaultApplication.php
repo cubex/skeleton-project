@@ -8,13 +8,16 @@ use Cubex\Cubex;
 use Cubex\Events\Handle\ResponsePreSendHeadersEvent;
 use Cubex\Http\FuncHandler;
 use Cubex\Http\Handler;
+use Cubex\Http\LazyHandler;
+use Cubex\Routing\RequestConstraint;
 use Packaged\Config\Provider\Ini\IniConfigProvider;
 use Packaged\Dal\DalResolver;
 use Packaged\Dispatch\Dispatch;
 use Packaged\Dispatch\Resources\ResourceFactory;
 use Packaged\Helpers\Path;
 use Packaged\Http\Response;
-use Project\Controllers\DefaultController;
+use Project\Api\ApiHandler;
+use Project\Frontend\Controllers\DefaultController;
 
 class DefaultApplication extends Application
 {
@@ -38,6 +41,10 @@ class DefaultApplication extends Application
 
     //Setup connections to the database if we are not handling static resources
     $this->_configureConnections();
+
+    //Route API Requests
+    yield self::_route("/", new LazyHandler(function () { return new ApiHandler(); }))
+      ->add(RequestConstraint::i()->subDomain('api'));
 
     //Let the parent application handle routes from here
     return parent::_getConditions();

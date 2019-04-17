@@ -1,5 +1,5 @@
 <?php
-namespace Project\Controllers;
+namespace Project\Frontend\Controllers;
 
 use Packaged\Helpers\Strings;
 

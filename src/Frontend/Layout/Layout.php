@@ -1,5 +1,5 @@
 <?php
-namespace Project\Layout;
+namespace Project\Frontend\Layout;
 
 use Packaged\Dispatch\Component\DispatchableComponent;
 use Packaged\Dispatch\ResourceManager;

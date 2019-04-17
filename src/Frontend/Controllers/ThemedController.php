@@ -1,10 +1,10 @@
 <?php
-namespace Project\Controllers;
+namespace Project\Frontend\Controllers;
 
 use Cubex\Context\Context;
 use Cubex\Controller\Controller;
 use Packaged\Ui\Renderable;
-use Project\Layout\Layout;
+use Project\Frontend\Layout\Layout;
 
 abstract class ThemedController extends Controller
 {
