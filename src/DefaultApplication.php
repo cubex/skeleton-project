@@ -5,7 +5,7 @@ use Cubex\Application\Application;
 use Cubex\Console\Events\ConsolePrepareEvent;
 use Cubex\Context\Context;
 use Cubex\Cubex;
-use Cubex\Events\Handle\ResponsePrepareEvent;
+use Cubex\Events\Handle\ResponsePreSendHeadersEvent;
 use Cubex\Http\FuncHandler;
 use Cubex\Http\Handler;
 use Packaged\Config\Provider\Ini\IniConfigProvider;
@@ -77,8 +77,8 @@ class DefaultApplication extends Application
 
     //Send debug headers locally
     $cubex->listen(
-      ResponsePrepareEvent::class,
-      function (ResponsePrepareEvent $e) {
+      ResponsePreSendHeadersEvent::class,
+      function (ResponsePreSendHeadersEvent $e) {
         $r = $e->getResponse();
         if($r instanceof Response && $e->getContext()->isEnv(Context::ENV_LOCAL))
         {
