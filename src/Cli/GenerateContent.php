@@ -31,7 +31,6 @@ class GenerateContent extends ConsoleCommand
   {
     return [
       "knock",
-      "rape",
       "ecstasy",
       "rank",
       "preparation",

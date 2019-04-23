@@ -6,7 +6,7 @@ use Project\Storage\ContentPage;
 
 class ContentController extends ThemedController
 {
-  protected function _getConditions()
+  protected function _generateRoutes()
   {
     return 'content';
   }

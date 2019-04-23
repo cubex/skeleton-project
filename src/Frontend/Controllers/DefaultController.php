@@ -5,7 +5,7 @@ use Packaged\Helpers\Strings;
 
 class DefaultController extends ThemedController
 {
-  protected function _getConditions()
+  protected function _generateRoutes()
   {
     yield self::_route("/hello/{who}", "hello");
     yield self::_route("/content", ContentController::class);

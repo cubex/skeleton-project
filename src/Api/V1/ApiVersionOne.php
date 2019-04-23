@@ -5,7 +5,7 @@ use Project\Api\V1\Controllers\CatsController;
 
 class ApiVersionOne extends AbstractVersionOneApiController
 {
-  protected function _getConditions()
+  protected function _generateRoutes()
   {
     yield self::_route('version', 'version');
     yield self::_route('cats', CatsController::class);

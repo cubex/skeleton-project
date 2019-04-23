@@ -10,20 +10,20 @@ abstract class ThemedController extends Controller
 {
   /**
    * @param Context $c
-   * @param         $obj
+   * @param         $result
+   * @param null    $buffer
    *
    * @return mixed|Layout
    * @throws \Exception
    */
-  protected function _prepareResponse(Context $c, $obj)
+  protected function _prepareResponse(Context $c, $result, $buffer = null)
   {
-    $obj = parent::_prepareResponse($c, $obj);
-    if($obj instanceof Renderable || is_scalar($obj))
+    if($result instanceof Renderable || is_scalar($result))
     {
       $theme = new Layout();
-      $theme->setContent($obj);
-      return $theme;
+      $theme->setContent($result);
+      return parent::_prepareResponse($c, $theme, $buffer);
     }
-    return $obj;
+    return parent::_prepareResponse($c, $result, $buffer);
   }
 }

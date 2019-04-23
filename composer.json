@@ -9,7 +9,7 @@
   },
   "prefer-stable": true,
   "require": {
-    "cubex/framework": "~4.0",
+    "cubex/framework": "dev-master",
     "packaged/dal": "^1.8",
     "packaged/dispatch": "~2.6",
     "packaged-ui/fontawesome": "^3.5",
@@ -21,5 +21,11 @@
     "psr-4": {
       "Project\\": "src/"
     }
-  }
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:cubex/framework.git"
+    }
+  ]
 }

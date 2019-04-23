@@ -4,16 +4,15 @@ namespace Project\Api\V1;
 use Cubex\Context\Context;
 use Cubex\Controller\Controller;
 use Packaged\Http\Responses\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractVersionOneApiController extends Controller
 {
-  protected function _handleResponse(Context $c, $response, ?string $buffer = null): Response
+  protected function _prepareResponse(Context $c, $result, $buffer = null)
   {
-    if(is_array($response) || is_scalar($response))
+    if(is_array($result) || is_scalar($result))
     {
-      $response = JsonResponse::create($response);
+      $result = JsonResponse::create($result);
     }
-    return parent::_handleResponse($c, $response, $buffer);
+    return parent::_prepareResponse($c, $result, $buffer);
   }
 }

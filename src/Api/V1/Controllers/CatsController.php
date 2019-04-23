@@ -6,7 +6,7 @@ use Project\Api\V1\Definitions\Cat;
 
 class CatsController extends AbstractVersionOneApiController
 {
-  protected function _getConditions()
+  protected function _generateRoutes()
   {
     return 'cats';
   }

@@ -23,7 +23,7 @@ class DefaultApplication extends Application
 {
   const DISPATCH_PATH = '/_r';
 
-  protected function _getConditions()
+  protected function _generateRoutes()
   {
     //Handle our favicon
     yield self::_route(
@@ -47,7 +47,7 @@ class DefaultApplication extends Application
       ->add(RequestConstraint::i()->subDomain('api'));
 
     //Let the parent application handle routes from here
-    return parent::_getConditions();
+    return parent::_generateRoutes();
   }
 
   protected function _defaultHandler(): Handler
@@ -110,19 +110,20 @@ class DefaultApplication extends Application
   private function _configureConnections()
   {
     $ctx = $this->getContext();
+    $confDir = Path::system($ctx->getProjectRoot(), 'conf');
 
     $thisonnectionConfig = new IniConfigProvider();
     $thisonnectionConfig->loadFiles(
       [
-        Path::system($ctx->getProjectRoot(), 'conf', 'defaults', 'connections.ini'),
-        Path::system($ctx->getProjectRoot(), 'conf', $ctx->getEnvironment(), 'connections.ini'),
+        $confDir . DIRECTORY_SEPARATOR . 'defaults' . DIRECTORY_SEPARATOR . 'connections.ini',
+        $confDir . DIRECTORY_SEPARATOR . $ctx->getEnvironment() . DIRECTORY_SEPARATOR . 'connections.ini',
       ]
     );
     $datastoreConfig = new IniConfigProvider();
     $datastoreConfig->loadFiles(
       [
-        Path::system($ctx->getProjectRoot(), 'conf', 'defaults', 'datastores.ini'),
-        Path::system($ctx->getProjectRoot(), 'conf', $ctx->getEnvironment(), 'datastores.ini'),
+        $confDir . DIRECTORY_SEPARATOR . 'defaults' . DIRECTORY_SEPARATOR . 'datastores.ini',
+        $confDir . DIRECTORY_SEPARATOR . $ctx->getEnvironment() . DIRECTORY_SEPARATOR . 'datastores.ini',
       ]
     );
     $resolver = new DalResolver($thisonnectionConfig, $datastoreConfig);
