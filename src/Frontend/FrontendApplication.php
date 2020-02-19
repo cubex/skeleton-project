@@ -6,6 +6,7 @@ use Packaged\Context\Context;
 use Packaged\Dispatch\Dispatch;
 use Packaged\Dispatch\Resources\ResourceFactory;
 use Packaged\Http\Response;
+use Packaged\Routing\Handler\FuncHandler;
 use Project\Frontend\Controllers\DefaultController;
 use Project\SkeletonApplication;
 
@@ -56,6 +57,12 @@ class FrontendApplication extends SkeletonApplication
         }
       );
     }
+
+
+    yield self::_route(
+      self::DISPATCH_PATH,
+      new FuncHandler(function (Context $c): \Symfony\Component\HttpFoundation\Response { return Dispatch::instance()->handleRequest($c->request()); })
+    );
 
     $this->_setupApplication();
 
