@@ -1,13 +1,14 @@
 <?php
 namespace Project\Api;
 
-use Cubex\Controller\Controller;
 use Project\Api\V1\ApiVersionOne;
+use Project\SkeletonApplication;
 
-class ApiHandler extends Controller
+class ApiApplication extends SkeletonApplication
 {
   protected function _generateRoutes()
   {
+    $this->_configureConnections();
     yield self::_route('v1', ApiVersionOne::class);
   }
 }

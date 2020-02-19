@@ -1,28 +1,25 @@
 <?php
 namespace Project\Frontend\Layout;
 
+use Packaged\Context\ContextAware;
+use Packaged\Context\ContextAwareTrait;
+use Packaged\Context\WithContext;
+use Packaged\Context\WithContextTrait;
 use Packaged\Dispatch\Component\DispatchableComponent;
 use Packaged\Dispatch\ResourceManager;
 use Packaged\SafeHtml\ISafeHtmlProducer;
 use Packaged\Ui\Element;
-use PackagedUi\FontAwesome\FaIcon;
 
-class Layout extends Element implements DispatchableComponent
+class Layout extends Element implements DispatchableComponent, ContextAware, WithContext
 {
+  use ContextAwareTrait;
+  use WithContextTrait;
+
   protected $_content;
 
-  /**
-   * Layout constructor.
-   *
-   * @throws \Exception
-   */
   public function __construct()
   {
-    ResourceManager::component($this)->requireCss('css/layout.css');
-    ResourceManager::external()->requireCss(
-      'https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,500,500i,700,700i,900'
-    );
-    ResourceManager::vendor('packaged-ui', 'fontawesome')->requireCss(FaIcon::CSS_PATH);
+    ResourceManager::componentClass(self::class)->requireCss('css/layout.css');
   }
 
   public function setContent($content)

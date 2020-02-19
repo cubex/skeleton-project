@@ -2,8 +2,9 @@
 namespace Project\Frontend\Controllers;
 
 use Packaged\Helpers\Strings;
+use Project\Frontend\Layout\LayoutController;
 
-class DefaultController extends ThemedController
+class DefaultController extends LayoutController
 {
   protected function _generateRoutes()
   {

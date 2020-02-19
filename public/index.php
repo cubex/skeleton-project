@@ -1,8 +1,8 @@
 <?php
 define('PHP_START', microtime(true));
 
-use Cubex\Context\Context;
 use Cubex\Cubex;
+use Project\Context\SkeletonContext;
 use Project\DefaultApplication;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
@@ -10,9 +10,12 @@ use Whoops\Run;
 $loader = require_once(dirname(__DIR__) . '/vendor/autoload.php');
 try
 {
-  $cubex = new Cubex(dirname(__DIR__), $loader);
-  //Handle the application, throwing exceptions locally only
-  $cubex->handle(new DefaultApplication($cubex), true, $cubex->getSystemEnvironment() !== Context::ENV_LOCAL);
+  //Create a global Cubex instance, using SkeletonContext
+  $cubex = Cubex::withCustomContext(SkeletonContext::class, dirname(__DIR__), $loader);
+  //Handle the incoming request through "DefaultApplication"
+  $cubex->handle(new DefaultApplication($cubex));
+  //Call the shutdown command
+  $cubex->shutdown();
 }
 catch(Throwable $e)
 {

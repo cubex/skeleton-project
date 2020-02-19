@@ -1,8 +1,8 @@
 <?php
 namespace Project\Api\V1;
 
-use Cubex\Context\Context;
 use Cubex\Controller\Controller;
+use Packaged\Context\Context;
 use Packaged\Http\Responses\JsonResponse;
 
 abstract class AbstractVersionOneApiController extends Controller

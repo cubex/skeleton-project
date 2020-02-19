@@ -1,0 +1,27 @@
+<?php
+
+use Packaged\Dispatch\Dispatch;
+use Packaged\Dispatch\ResourceStore;
+
+$store = Dispatch::instance()->store();
+/**
+ * @var $this \Project\Frontend\Layout\HtmlWrap
+ */
+?>
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Skeleton Project</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+  <?= $store->generateHtmlIncludes(ResourceStore::TYPE_CSS, null, [ResourceStore::PRIORITY_LOW]) ?>
+</head>
+<body>
+<?= $this->getContent(); ?>
+<?= $store->generateHtmlIncludes(ResourceStore::TYPE_CSS, ResourceStore::PRIORITY_LOW) ?>
+<?= $store->generateHtmlIncludes(ResourceStore::TYPE_JS); ?>
+</body>
+</html>

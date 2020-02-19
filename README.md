@@ -4,6 +4,8 @@ Project Template
 
 ##Generating Content
 
+Create your database and schema using test.sql 
+
 To generate database content, run the following command
 
     ./cubex GenerateContent
