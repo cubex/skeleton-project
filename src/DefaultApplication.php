@@ -5,20 +5,55 @@ use Cubex\Console\Events\ConsolePrepareEvent;
 use Cubex\Context\Context;
 use Cubex\Cubex;
 use Cubex\Routing\LazyHandler;
+use Packaged\Dispatch\Resources\ResourceFactory;
+use Packaged\Helpers\Path;
+use Packaged\Helpers\ValueAs;
+use Packaged\Http\Request;
 use Packaged\Routing\HealthCheckCondition;
 use Packaged\Routing\RequestCondition;
 use Packaged\Routing\Route;
+use Packaged\Routing\Routes\InsecureRequestUpgradeRoute;
 use Project\Api\ApiApplication;
 use Project\Frontend\FrontendApplication;
-use Symfony\Component\HttpFoundation\Response;
 
 class DefaultApplication extends SkeletonApplication
 {
   protected function _generateRoutes()
   {
     //Handle common health check calls.
-    //TODO: Create a health check method for your application
-    yield Route::with(new HealthCheckCondition())->setHandler(function () { return Response::create('OK'); });
+    yield Route::with(new HealthCheckCondition())->setHandler(
+      function () {
+        //TODO: Create a health check method for your application
+        return \Packaged\Http\Response::create('OK');
+      }
+    );
+
+    yield self::_route(
+      "/favicon.ico",
+      function (\Packaged\Context\Context $c) {
+        return ResourceFactory::fromFile(Path::system($c->getProjectRoot(), 'resources/favicon/favicon.ico'));
+      }
+    );
+    yield self::_route(
+      "/robots.txt",
+      function (Context $c) {
+        return ResourceFactory::fromFile(Path::system($c->getProjectRoot(), 'public/robots.txt'));
+      }
+    );
+
+    if(ValueAs::bool($this->getContext()->config()->getItem('serve', 'redirect_https')))
+    {
+      yield InsecureRequestUpgradeRoute::i();
+    }
+
+    $proxies = $this->getContext()->config()->getItem('serve', 'trusted_proxies');
+    if($proxies !== null)
+    {
+      Request::setTrustedProxies(ValueAs::arr($proxies), Request::HEADER_X_FORWARDED_ALL);
+    }
+
+    //Run any generic setup here
+    $this->_setupApplication();
 
     //Route API Requests
     yield self::_route(
@@ -65,5 +100,10 @@ class DefaultApplication extends SkeletonApplication
         $this->_configureConnections();
       }
     );
+  }
+
+  protected function _setupApplication()
+  {
+
   }
 }

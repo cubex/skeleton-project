@@ -2,6 +2,7 @@
 namespace Project\Cli;
 
 use Cubex\Console\ConsoleCommand;
+use Cubex\Context\Context;
 use Packaged\Helpers\Strings;
 use Project\Storage\ContentPage;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,6 +17,13 @@ class GenerateContent extends ConsoleCommand
 
   protected function executeCommand(InputInterface $input, OutputInterface $output)
   {
+    $ctx = $this->getContext();
+    //Launch the CLI application if we want DB connectivity
+    if($ctx instanceof Context)
+    {
+      CliApplication::launch($ctx);
+    }
+
     for($i = 0; $i < $this->quantity; $i++)
     {
       $words = $this->_words();
