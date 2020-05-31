@@ -4,7 +4,6 @@ namespace Project\Frontend;
 use Cubex\Events\Handle\ResponsePreSendHeadersEvent;
 use Packaged\Context\Context;
 use Packaged\Dispatch\Dispatch;
-use Packaged\Dispatch\Resources\ResourceFactory;
 use Packaged\Http\Response;
 use Packaged\Routing\Handler\FuncHandler;
 use Project\Frontend\Controllers\DefaultController;
@@ -46,22 +45,13 @@ class FrontendApplication extends SkeletonApplication
 
   protected function _generateRoutes()
   {
-
-    //Handle approved static resources from the public folder
-    foreach(['favicon.ico', 'robots.txt'] as $publicFile)
-    {
-      yield self::_route(
-        "/" . $publicFile,
-        function (Context $c) use ($publicFile) {
-          return ResourceFactory::fromFile($c->getProjectRoot() . '/public/' . $publicFile);
-        }
-      );
-    }
-
-
     yield self::_route(
       self::DISPATCH_PATH,
-      new FuncHandler(function (Context $c): \Symfony\Component\HttpFoundation\Response { return Dispatch::instance()->handleRequest($c->request()); })
+      new FuncHandler(
+        function (Context $c): \Symfony\Component\HttpFoundation\Response {
+          return Dispatch::instance()->handleRequest($c->request());
+        }
+      )
     );
 
     $this->_setupApplication();

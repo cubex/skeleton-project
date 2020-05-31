@@ -5,7 +5,6 @@ use Cubex\Context\Context;
 use Cubex\Cubex;
 use Cubex\Routing\LazyHandler;
 use Packaged\Dispatch\Resources\ResourceFactory;
-use Packaged\Helpers\Path;
 use Packaged\Helpers\ValueAs;
 use Packaged\Http\Request;
 use Packaged\Http\Response;
@@ -28,21 +27,16 @@ class DefaultApplication extends SkeletonApplication
       }
     );
 
-    //Handle favicon.ico
-    yield self::_route(
-      "/favicon.ico",
-      function (\Packaged\Context\Context $c) {
-        return ResourceFactory::fromFile(Path::system($c->getProjectRoot(), 'resources/favicon/favicon.ico'));
-      }
-    );
-
-    //handle robots.txt
-    yield self::_route(
-      "/robots.txt",
-      function (Context $c) {
-        return ResourceFactory::fromFile(Path::system($c->getProjectRoot(), 'public/robots.txt'));
-      }
-    );
+    //Handle approved static resources from the public folder
+    foreach(['favicon.ico', 'robots.txt'] as $publicFile)
+    {
+      yield self::_route(
+        "/" . $publicFile,
+        function (\Packaged\Context\Context $c) use ($publicFile) {
+          return ResourceFactory::fromFile($c->getProjectRoot() . '/public/' . $publicFile);
+        }
+      );
+    }
 
     if(ValueAs::bool($this->getContext()->config()->getItem('serve', 'redirect_https')))
     {
