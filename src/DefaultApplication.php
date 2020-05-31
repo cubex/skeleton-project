@@ -1,7 +1,6 @@
 <?php
 namespace Project;
 
-use Cubex\Console\Events\ConsolePrepareEvent;
 use Cubex\Context\Context;
 use Cubex\Cubex;
 use Cubex\Routing\LazyHandler;
@@ -95,19 +94,9 @@ class DefaultApplication extends SkeletonApplication
         }
       }
     );
-
-    //Setup Database connections for Console Commands
-    $cubex->listen(
-      ConsolePrepareEvent::class,
-      function (ConsolePrepareEvent $e) {
-        $this->setContext($e->getContext());
-        $this->_configureConnections();
-      }
-    );
   }
 
   protected function _setupApplication()
   {
-
   }
 }
