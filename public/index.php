@@ -14,12 +14,18 @@ try
   $cubex = Cubex::withCustomContext(SkeletonContext::class, dirname(__DIR__), $loader);
   //Handle the incoming request through "DefaultApplication"
   $cubex->handle(new DefaultApplication($cubex));
-  //Call the shutdown command
-  $cubex->shutdown();
 }
 catch(Throwable $e)
 {
   $handler = new Run();
   $handler->pushHandler(new PrettyPageHandler());
   $handler->handleException($e);
+}
+finally
+{
+  if($cubex instanceof Cubex)
+  {
+    //Call the shutdown command
+    $cubex->shutdown();
+  }
 }
