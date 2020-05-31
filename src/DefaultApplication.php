@@ -9,6 +9,7 @@ use Packaged\Dispatch\Resources\ResourceFactory;
 use Packaged\Helpers\Path;
 use Packaged\Helpers\ValueAs;
 use Packaged\Http\Request;
+use Packaged\Http\Response;
 use Packaged\Routing\HealthCheckCondition;
 use Packaged\Routing\RequestCondition;
 use Packaged\Routing\Route;
@@ -24,16 +25,19 @@ class DefaultApplication extends SkeletonApplication
     yield Route::with(new HealthCheckCondition())->setHandler(
       function () {
         //TODO: Create a health check method for your application
-        return \Packaged\Http\Response::create('OK');
+        return Response::create('OK');
       }
     );
 
+    //Handle favicon.ico
     yield self::_route(
       "/favicon.ico",
       function (\Packaged\Context\Context $c) {
         return ResourceFactory::fromFile(Path::system($c->getProjectRoot(), 'resources/favicon/favicon.ico'));
       }
     );
+
+    //handle robots.txt
     yield self::_route(
       "/robots.txt",
       function (Context $c) {
