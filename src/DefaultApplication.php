@@ -55,21 +55,15 @@ class DefaultApplication extends SkeletonApplication
     //Route API Requests
     yield self::_route(
       '/',
-      new LazyHandler(function (Context $c) { return (new ApiApplication($c->getCubex()))->setContext($c); })
-    )
-      ->add(RequestCondition::i()->subDomain('api'));
+      new LazyHandler(function (Context $c) { return (ApiApplication::withContext($c, $c->getCubex())); })
+    )->add(RequestCondition::i()->subDomain('api'));
 
     //Route Frontend Requests
-    yield self::_route(
-      '/',
-      new LazyHandler(function (Context $c) { return (new FrontendApplication($c->getCubex()))->setContext($c); })
-    )
-      ->add(RequestCondition::i()->subDomain(''));
-    yield self::_route(
-      '/',
-      new LazyHandler(function (Context $c) { return (new FrontendApplication($c->getCubex()))->setContext($c); })
-    )
-      ->add(RequestCondition::i()->subDomain('www'));
+    $frontendHandler = new LazyHandler(
+      function (Context $c) { return (FrontendApplication::withContext($c, $c->getCubex())); }
+    );
+    yield self::_route('/', $frontendHandler)->add(RequestCondition::i()->subDomain(''));
+    yield self::_route('/', $frontendHandler)->add(RequestCondition::i()->subDomain('www'));
 
     //Let the parent application handle routes from here
     return parent::_generateRoutes();

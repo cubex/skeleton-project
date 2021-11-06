@@ -10,13 +10,11 @@
   "prefer-stable": true,
   "require": {
     "cubex/framework": "^4.0",
+    "cubex/mv": "dev-main",
+    "filp/whoops": "^2.3",
     "packaged/dal": "^1.8",
     "packaged/dispatch": "~2.6",
-    "packaged-ui/fontawesome": "^3.5",
-    "packaged-ui/fusion": "^1.4",
-    "filp/whoops": "^2.3"
-  },
-  "require-dev": {
+    "packaged/glimpse": "^2.8"
   },
   "autoload": {
     "psr-4": {

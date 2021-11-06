@@ -3,11 +3,14 @@ namespace Project;
 
 use Cubex\Application\Application;
 use Packaged\Config\Provider\Ini\IniConfigProvider;
+use Packaged\Context\WithContextTrait;
 use Packaged\Dal\DalResolver;
 use Packaged\Helpers\Path;
 
 abstract class SkeletonApplication extends Application
 {
+  use WithContextTrait;
+
   //Setup our database connections
   protected function _configureConnections()
   {

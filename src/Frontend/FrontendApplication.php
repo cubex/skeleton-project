@@ -6,7 +6,8 @@ use Packaged\Context\Context;
 use Packaged\Dispatch\Dispatch;
 use Packaged\Http\Response;
 use Packaged\Routing\Handler\FuncHandler;
-use Project\Frontend\Controllers\DefaultController;
+use Project\Frontend\Content\ContentController;
+use Project\Frontend\Homepage\HomepageController;
 use Project\SkeletonApplication;
 
 class FrontendApplication extends SkeletonApplication
@@ -56,6 +57,8 @@ class FrontendApplication extends SkeletonApplication
 
     $this->_setupApplication();
 
-    return DefaultController::class;
+    //Frontend L1 Routes
+    yield self::_route("/content", ContentController::class);
+    yield self::_route("/", HomepageController::class);
   }
 }
