@@ -12,7 +12,7 @@ class ContentController extends LayoutController
     return 'content';
   }
 
-  protected function processContent()
+  public function processContent()
   {
     //Create a view model
     $model = ContentModel::withContext($this);

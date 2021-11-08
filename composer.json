@@ -16,9 +16,17 @@
     "packaged/dispatch": "~2.6",
     "packaged/glimpse": "^2.8"
   },
+  "require-dev": {
+    "phpunit/phpunit": "9.5.*"
+  },
   "autoload": {
     "psr-4": {
       "Project\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ProjectTests\\": "tests/"
     }
   },
   "repositories": [
