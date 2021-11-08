@@ -10,7 +10,7 @@
   "prefer-stable": true,
   "require": {
     "cubex/framework": "^4.0",
-    "cubex/mv": "dev-main",
+    "cubex/mv": "^0.2",
     "filp/whoops": "^2.3",
     "packaged/dal": "^1.8",
     "packaged/dispatch": "~2.6",

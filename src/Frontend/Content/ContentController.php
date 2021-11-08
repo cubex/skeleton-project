@@ -21,6 +21,6 @@ class ContentController extends LayoutController
     $model->page = ContentPage::collection()->orderBy(CustomSelectExpression::create('RAND()'))->first();
 
     //Return the model with a preferred view for improved testability
-    return $model->setPreferredView(ContentView::class);
+    return $model->setDefaultView(ContentView::class);
   }
 }
